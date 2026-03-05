@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.ark</groupId>
+        <artifactId>ark-bom</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>ark-bom-framework</artifactId>
+    <packaging>pom</packaging>
+
+    <name>ark-bom-framework</name>
+    <description>ark框架自定义包版本管理</description>
+
+    <properties>
+        <revsion>1.0-INITIAL</revsion>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.ark</groupId>
+                <artifactId>security-satoken</artifactId>
+                <version>${revision}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.ark</groupId>
+    <artifactId>ark-bom</artifactId>
+    <version>${revision}</version>
+
+    <packaging>pom</packaging>
+
+    <name>ark-bom</name>
+    <description>依赖版本统一管理</description>
+
+    <modules>
+        <module>ark-bom-spring</module>
+        <module>ark-bom-framework</module>
+        <module>ark-bom-tool</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <revision>1.0-INITIAL</revision>
+    </properties>
+
+
+</project>
