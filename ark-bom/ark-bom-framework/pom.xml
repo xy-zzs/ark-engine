@@ -24,6 +24,11 @@
                 <artifactId>security-satoken</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
+                <artifactId>security-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
