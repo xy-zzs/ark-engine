@@ -21,12 +21,22 @@
         <dependencies>
             <dependency>
                 <groupId>io.ark</groupId>
+                <artifactId>security-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
                 <artifactId>user-domain</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ark</groupId>
                 <artifactId>engine-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
+                <artifactId>security-sas</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

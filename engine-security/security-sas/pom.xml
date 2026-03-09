@@ -16,4 +16,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.ark</groupId>
+            <artifactId>security-core</artifactId>
+        </dependency>
+    </dependencies>
 </project>

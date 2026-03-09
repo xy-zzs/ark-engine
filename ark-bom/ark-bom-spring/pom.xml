@@ -19,7 +19,7 @@
         <spring.cloud.version>2025.1.0</spring.cloud.version>
         <spring.cloud.alibaba.version>2025.1.0.0</spring.cloud.alibaba.version>
         <springdoc.version>3.0.2</springdoc.version>
-        <sa-token.version>1.44.0</sa-token.version>
+        <sa-token.version>1.45.0</sa-token.version>
 <!--        <spring.boot.version>3.5.0</spring.boot.version>-->
 <!--        <spring.cloud.version>2025.0.0</spring.cloud.version>-->
 <!--        <spring.cloud.alibaba.version>2025.0.0.0</spring.cloud.alibaba.version>-->
