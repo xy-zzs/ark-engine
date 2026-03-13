@@ -3,27 +3,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.ark</groupId>
-        <artifactId>engine-security</artifactId>
+        <artifactId>ark-framework</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>security-starter</artifactId>
+    <artifactId>framework-web</artifactId>
     <packaging>jar</packaging>
 
-    <name>security-starter</name>
+    <name>framework-web</name>
+    <description>web前端封装</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>io.ark</groupId>
-            <artifactId>security-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-    </dependencies>
 </project>
