@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -46,8 +46,7 @@ public class SecurityAutoConfig {
      * 业务方在自己模块中注册 SecurityFilterChain Bean 即可完全覆盖
      */
     @Bean
-    @Order(100)
-//    @ConditionalOnMissingBean(SecurityFilterChain.class)
+    @ConditionalOnMissingBean(SecurityFilterChain.class)
     public SecurityFilterChain defaultFilterChain(HttpSecurity httpSecurity,
                                                   TokenAuthFilter tokenAuthFilter,
                                                   SecurityProperties securityProperties,
@@ -55,12 +54,11 @@ public class SecurityAutoConfig {
                                                   SecurityAccessDeniedHandler accessDeniedHandler){
         // 白名单路径转数组
         String[] ignoreUrls = securityProperties.getIgnoreUrls().toArray(String[]::new);
-        System.out.println("=== defaultSecurityFilterChain 已创建 ===");
-        System.out.println("ignoreUrls: " + Arrays.toString(ignoreUrls));
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers(ignoreUrls).permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth.requestMatchers(ignoreUrls).permitAll()
+                                                                                .anyRequest().authenticated())
                 .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(authEntryPoint)
@@ -73,10 +71,7 @@ public class SecurityAutoConfig {
     public SecurityAuthEntryPoint authEntryPoint(){
         return new SecurityAuthEntryPoint();
     }
-    // 加这个，启动时看控制台有没有打印
-    public SecurityAutoConfig() {
-        System.out.println("=== SecurityAutoConfig 已加载 ===");
-    }
+
     @Bean
     @ConditionalOnMissingBean
     public SecurityAccessDeniedHandler accessDeniedHandler(){

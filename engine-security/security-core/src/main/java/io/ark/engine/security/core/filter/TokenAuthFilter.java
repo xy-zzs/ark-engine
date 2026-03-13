@@ -50,7 +50,6 @@ public class TokenAuthFilter extends OncePerRequestFilter {
         if (authorization == null) {
             System.out.println("Token未携带");
             return null;
-//            throw new MissingTokenException("Token未携带");
         }
         if(!authorization.isBlank() && authorization.startsWith("Bearer ")){
             return authorization.substring(7);
