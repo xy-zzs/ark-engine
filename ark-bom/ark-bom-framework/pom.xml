@@ -21,6 +21,32 @@
         <dependencies>
             <dependency>
                 <groupId>io.ark</groupId>
+                <artifactId>auth-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
+                <artifactId>auth-infrastructure</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
+                <artifactId>auth-adapter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
+                <artifactId>auth-domain</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
+                <artifactId>auth-application</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.ark</groupId>
                 <artifactId>framework-web</artifactId>
                 <version>${revision}</version>
             </dependency>
