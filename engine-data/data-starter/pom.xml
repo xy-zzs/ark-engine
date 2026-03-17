@@ -16,4 +16,30 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <!-- data-mp 默认引入，使用方只需依赖 data-starter 即可 -->
+        <dependency>
+            <groupId>io.ark</groupId>
+            <artifactId>data-mp</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!-- Spring Boot autoconfigure（提供 @ConditionalOn* 注解） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <!-- 让 IDE 能提示 ark.data.* 配置项 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 </project>

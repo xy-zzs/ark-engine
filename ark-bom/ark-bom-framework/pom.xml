@@ -21,6 +21,11 @@
         <dependencies>
             <dependency>
                 <groupId>io.ark</groupId>
+                <artifactId>data-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
                 <artifactId>auth-spring-boot-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
