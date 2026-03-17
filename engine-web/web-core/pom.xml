@@ -3,15 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.ark</groupId>
-        <artifactId>ark-engine</artifactId>
+        <artifactId>engine-web</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>engine-core</artifactId>
+    <artifactId>web-core</artifactId>
     <packaging>jar</packaging>
 
-    <name>engine-core</name>
-
+    <name>web-core</name>
+    <description>响应体、错误码接口、业务异常基类</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,8 +19,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

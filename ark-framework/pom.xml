@@ -12,9 +12,6 @@
 
     <name>ark-framework</name>
     <description>ark框架</description>
-    <modules>
-        <module>framework-web</module>
-    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

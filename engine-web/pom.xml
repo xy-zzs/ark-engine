@@ -3,18 +3,22 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.ark</groupId>
-        <artifactId>ark-framework</artifactId>
+        <artifactId>ark-engine</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>framework-web</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>engine-web</artifactId>
+    <packaging>pom</packaging>
 
-    <name>framework-web</name>
-    <description>web前端封装</description>
+    <name>engine-web</name>
+    <modules>
+        <module>web-core</module>
+        <module>web-starter</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
 
 </project>

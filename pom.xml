@@ -11,10 +11,10 @@
 
   <modules>
     <module>ark-bom</module>
-    <module>engine-core</module>
     <module>engine-data</module>
     <module>engine-security</module>
-      <module>ark-framework</module>
+    <module>ark-framework</module>
+    <module>engine-web</module>
   </modules>
 
   <properties>
