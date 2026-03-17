@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -53,6 +55,7 @@ public class SecurityAutoConfig {
                                                   SecurityAccessDeniedHandler accessDeniedHandler) throws Exception {
         // 白名单路径转数组
         String[] ignoreUrls = securityProperties.getIgnoreUrls().toArray(String[]::new);
+        System.out.println("ignoreUrls:"+ Arrays.toString(ignoreUrls));
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -75,5 +78,12 @@ public class SecurityAutoConfig {
     @ConditionalOnMissingBean
     public SecurityAccessDeniedHandler accessDeniedHandler(){
         return new SecurityAccessDeniedHandler();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public PasswordEncoder passwordEncoder() {
+        // 使用BCrypt加密算法，这是Spring Security推荐的密码编码器
+        return new BCryptPasswordEncoder();
     }
 }

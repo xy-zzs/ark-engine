@@ -1,7 +1,6 @@
 package io.ark.engine.security.core.filter;
 
 import io.ark.engine.security.core.context.SecurityUser;
-import io.ark.engine.security.core.execption.MissingTokenException;
 import io.ark.engine.security.core.token.JwtProvider;
 import io.ark.engine.security.core.token.TokenClaims;
 import jakarta.servlet.FilterChain;
@@ -12,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -30,7 +29,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = extractToken(request);
         try {
-            if (!token.isBlank()){
+            if (StringUtils.hasText(token)){
                 TokenClaims tokenClaims = jwtProvider.parseToken(token);
                 List<SimpleGrantedAuthority> authorities = tokenClaims.permissions().stream().map(SimpleGrantedAuthority::new).toList();
 
@@ -39,6 +38,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityUser, null, authorities));
             }
         } catch (Exception e) {
+            e.printStackTrace();
             // Token无效：清空上下文，继续走（后续鉴权会拦截）
             SecurityContextHolder.clearContext();
         }
@@ -51,7 +51,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
             System.out.println("Token未携带");
             return null;
         }
-        if(!authorization.isBlank() && authorization.startsWith("Bearer ")){
+        if(StringUtils.hasText(authorization) && authorization.startsWith("Bearer ")){
             return authorization.substring(7);
         }
         System.out.println("Token格式错误");
