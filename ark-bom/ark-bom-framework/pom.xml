@@ -21,6 +21,11 @@
         <dependencies>
             <dependency>
                 <groupId>io.ark</groupId>
+                <artifactId>engine-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
                 <artifactId>ark-framework</artifactId>
                 <version>${revision}</version>
             </dependency>
