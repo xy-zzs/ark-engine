@@ -15,6 +15,7 @@
     <module>engine-security</module>
     <module>ark-framework</module>
     <module>engine-web</module>
+    <module>engine-core</module>
   </modules>
 
   <properties>
