@@ -1,7 +1,7 @@
 package io.ark.engine.web.stater.config;
 
+import io.ark.engine.core.i18n.MessageSourceHolder;
 import io.ark.engine.web.core.handler.GlobalExceptionHandler;
-import io.ark.engine.web.core.i18n.MessageSourceHolder;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.MessageSource;

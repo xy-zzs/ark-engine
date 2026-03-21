@@ -1,5 +1,6 @@
 package io.ark.engine.web.core.exception;
 
+import io.ark.framework.exception.IErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -9,7 +10,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum GlobalErrorCode implements IErrorCode{
+public enum WebErrorCode implements IErrorCode {
     // ─── 成功 ──────────────────────────────────────────────────────────────
     SUCCESS(200,             "global.success"),
 

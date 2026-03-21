@@ -1,10 +1,21 @@
 package io.ark.framework.exception;
 
 /**
- * @Description: web 内置的通用错误码
+ * @Description: 框架级全局错误码
+ *
+ * <p>适用于所有模块通用的错误场景，不属于任何具体业务模块。
+ * 各业务模块的错误码（如 UserErrorCode、AuthErrorCode）应自行定义，
+ * 段位约定：
+ * <ul>
+ *   <li>0        - 成功</li>
+ *   <li>1 ~ 999  - 全局/框架错误（本类）</li>
+ *   <li>1000~1999 - user 模块</li>
+ *   <li>2000~2999 - auth 模块</li>
+ *   <li>3000~3999 - permission 模块</li>
+ * </ul>
+ *
  * @Author: Noah Zhou
  */
-
 public enum GlobalErrorCode implements IErrorCode{
     // ─── 成功 ──────────────────────────────────────────────────────────────
     SUCCESS(200,             "global.success"),

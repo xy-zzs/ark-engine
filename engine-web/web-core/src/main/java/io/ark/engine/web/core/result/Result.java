@@ -1,7 +1,7 @@
 package io.ark.engine.web.core.result;
 
-import io.ark.engine.web.core.exception.GlobalErrorCode;
-import io.ark.engine.web.core.exception.IErrorCode;
+import io.ark.engine.web.core.exception.WebErrorCode;
+import io.ark.framework.exception.IErrorCode;
 import lombok.Getter;
 
 /**
@@ -32,13 +32,13 @@ public class Result<T> {
     // ─── 成功 ──────────────────────────────────────────────────────────────
 
     public static <T> Result<T> ok(T data) {
-        return new Result<>(GlobalErrorCode.SUCCESS.getCode(),
-                GlobalErrorCode.SUCCESS.getMessageKey(), data);
+        return new Result<>(WebErrorCode.SUCCESS.getCode(),
+                WebErrorCode.SUCCESS.getMessageKey(), data);
     }
 
     public static Result<Void> ok() {
-        return new Result<>(GlobalErrorCode.SUCCESS.getCode(),
-                GlobalErrorCode.SUCCESS.getMessageKey(), null);
+        return new Result<>(WebErrorCode.SUCCESS.getCode(),
+                WebErrorCode.SUCCESS.getMessageKey(), null);
     }
 
     // ─── 失败 ──────────────────────────────────────────────────────────────
@@ -52,6 +52,6 @@ public class Result<T> {
     }
 
     public boolean isSuccess() {
-        return this.code == GlobalErrorCode.SUCCESS.getCode();
+        return this.code == WebErrorCode.SUCCESS.getCode();
     }
 }

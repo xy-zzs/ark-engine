@@ -1,5 +1,6 @@
 package io.ark.engine.web.core.exception;
 
+import io.ark.framework.exception.IErrorCode;
 import lombok.Getter;
 
 /**
@@ -19,7 +20,7 @@ import lombok.Getter;
  * @Author: Noah Zhou
  */
 @Getter
-public class ArkException extends RuntimeException{
+public class WebArkException extends RuntimeException{
 
     private final int code;
     /**
@@ -34,7 +35,7 @@ public class ArkException extends RuntimeException{
      */
     private final Object[] args;
 
-    public ArkException(IErrorCode errorCode, Object... args) {
+    public WebArkException(IErrorCode errorCode, Object... args) {
         // super message 存 key，方便日志直接看到 key
         super(errorCode.getMessageKey());
         this.code = errorCode.getCode();
@@ -42,14 +43,14 @@ public class ArkException extends RuntimeException{
         this.args = args;
     }
 
-    public ArkException(int code, String messageKey, Object... args) {
+    public WebArkException(int code, String messageKey, Object... args) {
         super(messageKey);
         this.code = code;
         this.messageKey = messageKey;
         this.args = args;
     }
 
-    public static ArkException of(IErrorCode errorCode, Object... args) {
-        return new ArkException(errorCode, args);
+    public static WebArkException of(IErrorCode errorCode, Object... args) {
+        return new WebArkException(errorCode, args);
     }
 }

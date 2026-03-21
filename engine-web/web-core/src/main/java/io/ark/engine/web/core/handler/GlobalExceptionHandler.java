@@ -1,8 +1,8 @@
 package io.ark.engine.web.core.handler;
 
-import io.ark.engine.web.core.exception.ArkException;
-import io.ark.engine.web.core.exception.GlobalErrorCode;
-import io.ark.engine.web.core.i18n.MessageSourceHolder;
+import io.ark.engine.core.i18n.MessageSourceHolder;
+import io.ark.engine.web.core.exception.WebArkException;
+import io.ark.engine.web.core.exception.WebErrorCode;
 import io.ark.engine.web.core.result.Result;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,18 +42,18 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining(", "));
         String i18n = messageSource.getMessage(message, null, LocaleContextHolder.getLocale());
         log.warn("参数校验失败: {}", i18n);
-        return Result.fail(GlobalErrorCode.BAD_REQUEST.getCode(),i18n);
+        return Result.fail(WebErrorCode.BAD_REQUEST.getCode(),i18n);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Result<Void> handleNotReadable(HttpMessageNotReadableException ex) {
         log.warn("请求体解析失败: {}", ex.getMessage());
-        String i18n = messageSource.getMessage(GlobalErrorCode.BAD_REQUEST.getMessageKey(), null, LocaleContextHolder.getLocale());
-        return Result.fail(GlobalErrorCode.BAD_REQUEST.getCode(),i18n);
+        String i18n = messageSource.getMessage(WebErrorCode.BAD_REQUEST.getMessageKey(), null, LocaleContextHolder.getLocale());
+        return Result.fail(WebErrorCode.BAD_REQUEST.getCode(),i18n);
     }
 
-    @ExceptionHandler(ArkException.class)
-    public Result<Void> handleArkException(ArkException ex) {
+    @ExceptionHandler(WebArkException.class)
+    public Result<Void> handleArkException(WebArkException ex) {
         // 翻译：用异常携带的 key + args，结合当前请求 locale
         String message = MessageSourceHolder.getMessage(ex.getMessageKey(), ex.getArgs());
         if (ex.getCode() >= 500) {
@@ -67,21 +67,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public Result<Void> handleNotFound(NoResourceFoundException ex) {
         log.warn("资源不存在: {}", ex.getResourcePath());
-        return Result.fail(GlobalErrorCode.NOT_FOUND.getCode(),
-                MessageSourceHolder.getMessage(GlobalErrorCode.NOT_FOUND.getMessageKey()));
+        return Result.fail(WebErrorCode.NOT_FOUND.getCode(),
+                MessageSourceHolder.getMessage(WebErrorCode.NOT_FOUND.getMessageKey()));
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result<Void> handleMethodNotAllowed(HttpRequestMethodNotSupportedException ex) {
         log.warn("请求方法不支持: {}", ex.getMethod());
-        return Result.fail(GlobalErrorCode.METHOD_NOT_ALLOWED.getCode(),
-                MessageSourceHolder.getMessage(GlobalErrorCode.METHOD_NOT_ALLOWED.getMessageKey()));
+        return Result.fail(WebErrorCode.METHOD_NOT_ALLOWED.getCode(),
+                MessageSourceHolder.getMessage(WebErrorCode.METHOD_NOT_ALLOWED.getMessageKey()));
     }
 
     @ExceptionHandler(Exception.class)
     public Result<Void> handleUnknown(Exception ex) {
         log.error("未知异常", ex);
-        return Result.fail(GlobalErrorCode.INTERNAL_ERROR.getCode(),
-                MessageSourceHolder.getMessage(GlobalErrorCode.INTERNAL_ERROR.getMessageKey()));
+        return Result.fail(WebErrorCode.INTERNAL_ERROR.getCode(),
+                MessageSourceHolder.getMessage(WebErrorCode.INTERNAL_ERROR.getMessageKey()));
     }
 }
