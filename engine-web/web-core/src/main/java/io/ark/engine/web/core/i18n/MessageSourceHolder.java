@@ -1,4 +1,4 @@
-package io.ark.engine.web.stater.i18n;
+package io.ark.engine.web.core.i18n;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

@@ -11,10 +11,10 @@
     <packaging>jar</packaging>
 
     <name>ark-framework</name>
-    <description>ark框架</description>
+    <description>ark框架，基础设施公共底座，engine-*-core 模块的共同依赖,零框架依赖</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <dependencies>
+        <!-- 无任何依赖，纯 Java -->
+    </dependencies>
 
 </project>

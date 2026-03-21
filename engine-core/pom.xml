@@ -11,12 +11,18 @@
     <packaging>jar</packaging>
 
     <name>engine-core</name>
+    <description>基础设施公共底座，engine-*-core 各模块的共同依赖，不含 web/data 具体技术栈</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.ark</groupId>
+            <artifactId>ark-framework</artifactId>
+        </dependency>
+        <!-- Spring 事件机制，用于 DomainEventPublisher 实现 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
