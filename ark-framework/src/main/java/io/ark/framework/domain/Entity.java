@@ -55,7 +55,7 @@ public abstract class Entity<ID> {
     /**
      * 仅供 infrastructure 层 Repository 实现在重建实体时调用，业务代码禁止调用
      */
-    protected void setId(ID id) {
+    public void setId(ID id) {
         this.id = id;
     }
 

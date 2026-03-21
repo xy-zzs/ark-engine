@@ -4,6 +4,7 @@ import io.ark.engine.core.i18n.MessageSourceHolder;
 import io.ark.engine.web.core.exception.WebArkException;
 import io.ark.engine.web.core.exception.WebErrorCode;
 import io.ark.engine.web.core.result.Result;
+import io.ark.framework.exception.BizException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -50,6 +51,14 @@ public class GlobalExceptionHandler {
         log.warn("请求体解析失败: {}", ex.getMessage());
         String i18n = messageSource.getMessage(WebErrorCode.BAD_REQUEST.getMessageKey(), null, LocaleContextHolder.getLocale());
         return Result.fail(WebErrorCode.BAD_REQUEST.getCode(),i18n);
+    }
+
+    @ExceptionHandler(BizException.class)
+    public Result<Void> handleArkException(BizException ex) {
+        // 翻译：用异常携带的 key + args，结合当前请求 locale
+        String message = MessageSourceHolder.getMessage(ex.getErrorCode().getMessageKey());
+        log.warn("业务异常[{}][{}]: {}", ex.getErrorCode().getCode(), ex.getErrorCode().getMessageKey(), message);
+        return Result.fail(ex.getErrorCode().getCode(), message);
     }
 
     @ExceptionHandler(WebArkException.class)
