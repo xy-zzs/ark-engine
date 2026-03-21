@@ -21,6 +21,21 @@
         <dependencies>
             <dependency>
                 <groupId>io.ark</groupId>
+                <artifactId>mq-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
+                <artifactId>mq-kafka</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
+                <artifactId>mq-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
                 <artifactId>cache-redis</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -84,6 +99,11 @@
             <dependency>
                 <groupId>io.ark</groupId>
                 <artifactId>data-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ark</groupId>
+                <artifactId>auth-api</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

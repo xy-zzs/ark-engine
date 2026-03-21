@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.ark</groupId>
+        <artifactId>engine-mq</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>mq-core</artifactId>
+    <packaging>jar</packaging>
+
+    <name>mq-core</name>
+    <description>MQ 发送抽象接口，业务层依赖此模块，不感知具体 MQ 技术</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.ark</groupId>
+            <artifactId>engine-core</artifactId>
+        </dependency>
+    </dependencies>
+</project>
