@@ -25,7 +25,7 @@ public class EngineCoreAutoConfiguration {
         return new SnowflakeIdGenerator(workerId);
     }
 
-    @Bean
+//    @Bean
     public SpringDomainEventPublisher domainEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         return new SpringDomainEventPublisher(applicationEventPublisher);
     }

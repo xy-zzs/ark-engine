@@ -1,5 +1,7 @@
 package io.ark.engine.mq.core;
 
+import io.ark.framework.domain.DomainEvent;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +20,7 @@ import java.util.UUID;
  *   <li>{@code headers}   - 扩展头，用于传递 traceId 等链路信息</li>
  * </ul>
  */
-public abstract class MqMessage {
+public abstract class MqMessage extends DomainEvent {
 
     private final String messageId;
     private final String topic;
@@ -27,6 +29,7 @@ public abstract class MqMessage {
     private final Map<String, String> headers;
 
     protected MqMessage(String topic, String tag) {
+        super( null);
         this.messageId = UUID.randomUUID().toString().replace("-", "");
         this.topic = topic;
         this.tag = tag;
