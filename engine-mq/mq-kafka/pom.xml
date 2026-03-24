@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>io.ark</groupId>
-            <artifactId>mq-core</artifactId>
+            <artifactId>mq-starter</artifactId>
         </dependency>
 
         <dependency>

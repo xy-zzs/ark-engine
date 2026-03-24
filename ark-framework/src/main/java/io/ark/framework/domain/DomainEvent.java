@@ -1,7 +1,9 @@
 package io.ark.framework.domain;
 
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * @Description: 领域事件基类
@@ -20,10 +22,14 @@ import java.time.LocalDateTime;
  */
 public abstract class DomainEvent {
 
+    private final String  eventId;
+    private final String  eventType;
+    /** 路由 tag，供 MQ 过滤使用，默认等于 eventType */
+    private final String  tag;
     /**
      * 事件发送时间，创建时自动赋值
      */
-    private final LocalDateTime occurredAt;
+    private final Instant occurredAt;
 
     /**
      * 触发此事件的聚合根 ID（字符串化，便于跨类型通用）
@@ -31,15 +37,29 @@ public abstract class DomainEvent {
     private final String aggregateId;
 
     protected DomainEvent(String aggregateId) {
+        this.eventId     = UUID.randomUUID().toString();
         this.aggregateId = aggregateId;
-        this.occurredAt = LocalDateTime.now();
+        this.occurredAt  = Instant.now();
+        this.eventType   = this.getClass().getSimpleName();
+        this.tag         = this.eventType;
     }
 
-    public LocalDateTime getOccurredAt() {
+    protected DomainEvent(String aggregateId, String tag) {
+        this.eventId     = UUID.randomUUID().toString();
+        this.aggregateId = aggregateId;
+        this.occurredAt  = Instant.now();
+        this.eventType   = this.getClass().getSimpleName();
+        this.tag         = tag;
+    }
+
+    public Instant getOccurredAt() {
         return occurredAt;
     }
 
     public String getAggregateId() {
         return aggregateId;
     }
+    public String  getEventId()     { return eventId; }
+    public String  getEventType()   { return eventType; }
+    public String  getTag()         { return tag; }
 }

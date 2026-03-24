@@ -1,1 +1,2 @@
 io.ark.engine.core.config.EngineCoreAutoConfiguration
+io.ark.engine.core.config.EventBusAutoConfiguration
