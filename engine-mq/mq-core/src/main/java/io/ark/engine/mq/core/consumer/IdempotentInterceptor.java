@@ -18,7 +18,7 @@ public class IdempotentInterceptor implements ConsumeInterceptor{
 
     @Override
     public boolean preConsume(MqMessage message) {
-        boolean first = store.tryMark(message.messageId(), expireSeconds);
+        boolean first = store.tryMark(message.getMessageId(), expireSeconds);
         if (!first) {
             // 重复消息直接短路
             return false;
@@ -30,7 +30,7 @@ public class IdempotentInterceptor implements ConsumeInterceptor{
     public void afterConsume(MqMessage message, Throwable error) {
         if (error != null) {
             // 消费失败，回滚幂等标记，允许重试
-            store.remove(message.messageId());
+            store.remove(message.getMessageId());
         }
     }
 

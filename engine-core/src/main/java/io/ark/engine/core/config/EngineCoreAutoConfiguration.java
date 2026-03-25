@@ -1,12 +1,10 @@
 package io.ark.engine.core.config;
 
-import io.ark.engine.core.event.SpringDomainEventPublisher;
 import io.ark.engine.core.i18n.MessageSourceResolver;
 import io.ark.engine.core.id.SnowflakeIdGenerator;
 import io.ark.framework.i18n.MessageResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 
@@ -25,10 +23,6 @@ public class EngineCoreAutoConfiguration {
         return new SnowflakeIdGenerator(workerId);
     }
 
-//    @Bean
-    public SpringDomainEventPublisher domainEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-        return new SpringDomainEventPublisher(applicationEventPublisher);
-    }
 
     /**
      * MessageResolver Bean：业务层注入此接口获取 i18n 文案。

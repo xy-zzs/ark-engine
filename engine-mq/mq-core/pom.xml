@@ -20,7 +20,8 @@
     <dependencies>
         <dependency>
             <groupId>io.ark</groupId>
-            <artifactId>engine-core</artifactId>
+            <artifactId>ark-application</artifactId>
+            <version>1.0-INITIAL</version>
         </dependency>
     </dependencies>
 </project>

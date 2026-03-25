@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     public Result<Void> handleArkException(BizException ex) {
         // 翻译：用异常携带的 key + args，结合当前请求 locale
         String message = MessageSourceHolder.getMessage(ex.getErrorCode().getMessageKey());
-        log.warn("业务异常[{}][{}]: {}", ex.getErrorCode().getCode(), ex.getErrorCode().getMessageKey(), message);
+        log.warn("BizException业务异常[{}][{}]: {}", ex.getErrorCode().getCode(), ex.getErrorCode().getMessageKey(), message);
         return Result.fail(ex.getErrorCode().getCode(), message);
     }
 
@@ -66,9 +66,9 @@ public class GlobalExceptionHandler {
         // 翻译：用异常携带的 key + args，结合当前请求 locale
         String message = MessageSourceHolder.getMessage(ex.getMessageKey(), ex.getArgs());
         if (ex.getCode() >= 500) {
-            log.error("业务异常[{}][{}]: {}", ex.getCode(), ex.getMessageKey(), message, ex);
+            log.error("WebArkException业务异常[{}][{}]: {}", ex.getCode(), ex.getMessageKey(), message, ex);
         } else {
-            log.warn("业务异常[{}][{}]: {}", ex.getCode(), ex.getMessageKey(), message);
+            log.warn("WebArkException业务异常[{}][{}]: {}", ex.getCode(), ex.getMessageKey(), message);
         }
         return Result.fail(ex.getCode(), message);
     }

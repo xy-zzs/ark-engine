@@ -1,1 +1,1 @@
-io.ark.engine.mq.autoconfigure.MqAutoConfiguration
+io.ark.engine.mq.starter.autoconfiguration.MQAutoConfiguration
