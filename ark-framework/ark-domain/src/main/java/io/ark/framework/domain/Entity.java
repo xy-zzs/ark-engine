@@ -66,8 +66,12 @@ public abstract class Entity<ID> {
   /** 实体相等性：仅比较 id，与属性值无关 */
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     Entity<?> entity = (Entity<?>) o;
     return Objects.equals(id, entity.id);
   }

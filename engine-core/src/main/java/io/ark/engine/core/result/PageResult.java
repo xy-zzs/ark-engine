@@ -54,7 +54,9 @@ public class PageResult<T> {
 
   /** 总页数 */
   public long getPages() {
-    if (size == 0) return 0;
+    if (size == 0) {
+      return 0;
+    }
     return (total + size - 1) / size;
   }
 }

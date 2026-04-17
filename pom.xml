@@ -72,11 +72,51 @@
             </java>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.6.0</version>
+          <dependencies>
+            <!-- 锁定 checkstyle 引擎版本，插件自带的版本较旧 -->
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>10.14.2</version>
+            </dependency>
+            <!-- ark-style.jar 提供 checkstyle/ark-checkstyle.xml -->
+            <dependency>
+              <groupId>io.ark</groupId>
+              <artifactId>ark-style</artifactId>
+              <version>${revision}</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <skip>${checkstyle.skip}</skip>
+            <!-- classpath 引用，从 ark-style.jar 内部读取，无路径依赖 -->
+            <configLocation>checkstyle/ark-checkstyle.xml</configLocation>
+            <!--            <configLocation>ark-checkstyle.xml</configLocation>-->
+            <encoding>UTF-8</encoding>
+            <failOnViolation>true</failOnViolation>
+            <consoleOutput>true</consoleOutput>
+            <excludes>**/generated/**,**/generated-sources/**</excludes>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
 
 
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ark-checkstyle</id>
+            <phase>validate</phase>
+            <goals><goal>check</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
