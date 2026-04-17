@@ -20,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>21</jdk.version>
         <revision>1.0-INITIAL</revision>
+        <spotless.skip>true</spotless.skip>
     </properties>
 
 
