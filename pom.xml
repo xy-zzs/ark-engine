@@ -18,6 +18,7 @@
     <module>engine-core</module>
     <module>engine-cache</module>
     <module>engine-mq</module>
+    <module>ark-style</module>
   </modules>
 
   <properties>
