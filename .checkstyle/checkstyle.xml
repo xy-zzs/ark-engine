@@ -1,31 +1,259 @@
 <?xml version="1.0"?>
 <!DOCTYPE module PUBLIC
-    "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
-    "https://checkstyle.org/dtds/configuration_1_3.dtd">
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <!--
-  checkstyle.xml — MVP 版
-  位置: ark-engine/ark-style/src/main/resources/checkstyle/checkstyle.xml
-  原则: 只放"格式化工具救不了、但危害明确"的规则，存量代码尽量不爆红
+  ark-checkstyle.xml — 生产级
+  适配: Spring Boot + DDD + 多模块 + 微服务
+  位置: ark-engine 根目录
+  引用: https://gitee.com/zzsvip/ark-engine/raw/master/ark-checkstyle.xml
 -->
 <module name="Checker">
     <property name="severity" value="error"/>
     <property name="fileExtensions" value="java"/>
     <property name="charset" value="UTF-8"/>
 
+    <!-- ================================================================
+         文件级检查（Checker 级，不需要解析 AST）
+         ================================================================ -->
+
+    <!-- 文件末尾必须有换行，与 .editorconfig insert_final_newline 对齐 -->
+    <module name="NewlineAtEndOfFile">
+        <property name="lineSeparator" value="lf"/>
+    </module>
+
+    <!-- 禁止 Tab 缩进，与 .editorconfig indent_style=space 对齐 -->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
+
+    <!--
+      行长度限制
+      DDD 中聚合根方法名、泛型链较长，120 是行业常见折中值
+      import 和注解行豁免（正则匹配）
+    -->
+    <module name="LineLength">
+        <property name="max" value="120"/>
+        <property name="ignorePattern" value="^(import|@).*"/>
+    </module>
+
+    <!-- ================================================================
+         语法树级检查（TreeWalker 级）
+         ================================================================ -->
     <module name="TreeWalker">
 
-        <!-- 禁止通配符 import（import com.xxx.*） -->
-<!--        <module name="AvoidStarImport"/>-->
+        <!-- ── 命名规范 ──────────────────────────────────────────────── -->
 
-        <!-- 禁止重复 import -->
+        <!-- 类名：大驼峰。含 DDD 常用后缀：Service/Repository/Factory/Aggregate -->
+        <module name="TypeName"/>
+
+        <!-- 接口名：大驼峰（DDD Repository 接口通常无 I 前缀，符合此规则） -->
+        <module name="InterfaceTypeParameterName"/>
+
+        <!-- 方法名：小驼峰 -->
+        <module name="MethodName"/>
+
+        <!-- 成员变量：小驼峰（Spring 注入字段也符合） -->
+        <module name="MemberName"/>
+
+        <!-- 局部变量：小驼峰 -->
+        <module name="LocalVariableName"/>
+
+        <!-- 常量：全大写下划线（static final 字段） -->
+        <module name="ConstantName"/>
+
+        <!--
+          包名：全小写，点分隔
+          DDD 典型包结构:
+            io.ark.engine.{context}.domain.{aggregate}
+            io.ark.engine.{context}.application
+            io.ark.engine.{context}.infrastructure
+        -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+        </module>
+
+        <!-- ── Import 管理 ───────────────────────────────────────────── -->
+
+        <!-- 禁止通配符 import（MVP 已有） -->
+        <module name="AvoidStarImport"/>
+
+        <!-- 禁止重复 import（MVP 已有） -->
         <module name="RedundantImport"/>
 
-        <!-- if / for / while 必须加大括号，防单行 bug -->
+        <!-- 禁止未使用的 import（Spotless removeUnusedImports 已处理，双重保障） -->
+        <module name="UnusedImports"/>
+
+        <!--
+          禁止引入特定类（DDD 分层保护）
+          domain 层禁止直接使用 HttpServletRequest/Response，
+          避免领域层对 Web 层产生依赖，违反洋葱架构
+          注意: 此规则作用于全局，如需精细控制用 ArchUnit 代替
+        -->
+        <module name="IllegalImport">
+            <property name="illegalPkgs" value="sun,com.sun"/>
+        </module>
+
+        <!-- ── 代码块 / 大括号 ───────────────────────────────────────── -->
+
+        <!-- if/for/while/do 必须加大括号（MVP 已有） -->
         <module name="NeedBraces"/>
 
-        <!-- 字符串比较必须用 equals，不能用 == -->
+        <!-- 左大括号必须在同行（K&R 风格，与 google-java-format 一致） -->
+        <module name="LeftCurly"/>
+
+        <!-- 右大括号独立一行 -->
+        <module name="RightCurly"/>
+
+        <!--
+          禁止空代码块（catch/finally/if 等）
+          option=text 表示允许有注释的空块（如 catch(Ex e) { // ignored }）
+        -->
+        <module name="EmptyBlock">
+            <property name="option" value="text"/>
+        </module>
+
+        <!-- 禁止空 catch 块，必须有注释说明原因 -->
+        <module name="EmptyCatchBlock">
+            <property name="exceptionVariableName" value="expected|ignore|ignored"/>
+        </module>
+
+        <!-- ── 空白与格式 ────────────────────────────────────────────── -->
+
+        <!-- 操作符前后必须有空格，允许空构造器/方法/Lambda -->
+        <module name="WhitespaceAround">
+            <property name="allowEmptyConstructors" value="true"/>
+            <property name="allowEmptyMethods" value="true"/>
+            <property name="allowEmptyTypes" value="true"/>
+            <property name="allowEmptyLoops" value="true"/>
+            <property name="allowEmptyLambdas" value="true"/>
+        </module>
+
+        <!-- 逗号、分号、类型转换后必须有空格 -->
+        <module name="WhitespaceAfter"/>
+
+        <!-- 一元操作符（++/--/!）前不能有空格 -->
+        <module name="NoWhitespaceBefore"/>
+
+        <!-- 泛型尖括号前不能有空格：List<String> 而非 List <String> -->
+        <module name="GenericWhitespace"/>
+
+        <!-- ── DDD 复杂度控制 ────────────────────────────────────────── -->
+
+        <!--
+          方法行数上限 80 行（不含空行）
+          DDD 命令方法职责单一，超过说明可能违反单一职责
+          超过时考虑: 提取私有方法 / 拆分领域服务 / 引入策略模式
+        -->
+        <module name="MethodLength">
+            <property name="max" value="80"/>
+            <property name="countEmpty" value="false"/>
+        </module>
+
+        <!--
+          方法参数个数上限 6 个
+          超过时考虑: 封装为 Command/Query 对象（DDD 标准做法）
+          构造函数豁免：聚合根重建时参数可能较多
+        -->
+        <module name="ParameterNumber">
+            <property name="max" value="6"/>
+            <property name="tokens" value="METHOD_DEF"/>
+        </module>
+
+        <!--
+          圈复杂度上限 10
+          超过时考虑: 策略模式 / 规格模式（DDD Specification）/ 拆分领域服务
+        -->
+        <module name="CyclomaticComplexity">
+            <property name="max" value="10"/>
+        </module>
+
+        <!--
+          布尔表达式复杂度（&&/|| 数量）上限 5
+          超过时考虑: 封装为 Specification 或具名方法
+        -->
+        <module name="BooleanExpressionComplexity">
+            <property name="max" value="5"/>
+        </module>
+
+        <!-- ── 错误处理 ──────────────────────────────────────────────── -->
+
+        <!--
+          禁止 catch 宽泛异常类型
+          微服务中捕获 Exception/Throwable 会吞掉 InterruptedException 等
+          应捕获具体类型，在全局异常处理器（@RestControllerAdvice）统一兜底
+        -->
+        <module name="IllegalCatch">
+            <property name="illegalClassNames"
+                      value="java.lang.Exception,java.lang.Throwable,java.lang.RuntimeException"/>
+        </module>
+
+        <!--
+          禁止 throw 宽泛异常
+          应抛出自定义领域异常（DomainException / BizException）
+        -->
+        <module name="IllegalThrows">
+            <property name="illegalClassNames"
+                      value="java.lang.Exception,java.lang.Throwable,java.lang.RuntimeException"/>
+        </module>
+
+        <!-- ── 最佳实践 ──────────────────────────────────────────────── -->
+
+        <!-- 字符串比较必须用 equals（MVP 已有） -->
         <module name="StringLiteralEquality"/>
+
+        <!-- 简化布尔返回：return flag == true → return flag -->
+        <module name="SimplifyBooleanReturn"/>
+
+        <!-- 简化布尔表达式 -->
+        <module name="SimplifyBooleanExpression"/>
+
+        <!-- 禁止不必要的括号 -->
+        <module name="UnnecessaryParentheses"/>
+
+        <!--
+          禁止魔法数字
+          0/1/-1/2 豁免；注解参数豁免（Spring @RequestMapping 等）
+          超过时考虑: 定义为常量并赋予业务含义
+        -->
+        <module name="MagicNumber">
+            <property name="ignoreNumbers" value="-1, 0, 1, 2"/>
+            <property name="ignoreAnnotation" value="true"/>
+            <property name="ignoreHashCodeMethod" value="true"/>
+            <property name="ignoreFieldDeclaration" value="true"/>
+        </module>
+
+        <!-- 每个源文件只声明一个顶级类 -->
+        <module name="OneTopLevelClass"/>
+
+        <!-- 禁止在 for 循环之外使用特定修饰符顺序（按 JLS 标准排列） -->
+        <module name="ModifierOrder"/>
+
+        <!-- 禁止多余的修饰符（接口方法的 public abstract 等） -->
+        <module name="RedundantModifier"/>
+
+        <!-- ── Javadoc ───────────────────────────────────────────────── -->
+
+        <!--
+          public 方法必须有 Javadoc
+          DDD 中领域层 public 方法代表业务意图，注释尤为重要
+          豁免: getter/setter（allowMissingPropertyJavadoc）
+          豁免: 测试注解、Override（allowedAnnotations）
+        -->
+        <module name="MissingJavadocMethod">
+            <property name="scope" value="public"/>
+            <property name="allowMissingPropertyJavadoc" value="true"/>
+            <property name="allowedAnnotations"
+                      value="Override,Test,ParameterizedTest,BeforeEach,AfterEach,BeforeAll,AfterAll,Bean,PostConstruct"/>
+        </module>
+
+        <!-- public 类必须有 Javadoc -->
+        <module name="MissingJavadocType">
+            <property name="scope" value="public"/>
+            <property name="skipAnnotations"
+                      value="SpringBootApplication,Configuration,RestController,Controller,Service,Repository,Component,Mapper,FeignClient"/>
+        </module>
 
     </module>
 
