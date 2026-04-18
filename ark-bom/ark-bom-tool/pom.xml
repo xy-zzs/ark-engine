@@ -15,10 +15,22 @@
 
     <properties>
         <jjwt.version>0.12.6</jjwt.version>
+        <flyway.version>10.15.0</flyway.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>$(flyway.version)</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-mysql</artifactId>
+                <version>$(flyway.version)</version>
+            </dependency>
+
             <!-- JWT -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
