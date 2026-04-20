@@ -15,10 +15,24 @@
 
     <properties>
         <jjwt.version>0.12.6</jjwt.version>
+        <flyway.version>10.15.0</flyway.version>
+        <jacoco.version>0.8.12</jacoco.version>
+        <dependency-check-maven.version>10.0.3</dependency-check-maven.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>$(flyway.version)</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-mysql</artifactId>
+                <version>$(flyway.version)</version>
+            </dependency>
+
             <!-- JWT -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
@@ -39,4 +53,21 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${dependency-check-maven.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
